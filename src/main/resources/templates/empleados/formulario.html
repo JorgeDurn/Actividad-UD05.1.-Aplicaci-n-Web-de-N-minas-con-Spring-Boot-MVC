@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+    <title>Formulario de Empleado</title>
+</head>
+<body>
+    <h1 th:text="${empleado.dni != null ? 'Editar Empleado' : 'Nuevo Empleado'}"></h1>
+        <div th:if="${error}" class="alert alert-danger">
+        <p th:text="${error}"></p>
+    </div>
+    <form th:action="@{${empleado.dni != null} ? '/empresa/guardar' : '/empresa/crear'}" method="post">
+        <label for="dni">DNI:</label>
+        <input type="text" id="dni" name="dni" th:value="${empleado.dni}" th:readonly="${empleado.dni != null}" required/>
+    
+        <label for="nombre">Nombre:</label>
+        <input type="text" id="nombre" name="nombre" th:value="${empleado.nombre}" required/>
+
+    	 <label for="sexo">Sexo:</label>
+			<select id="sexo" name="sexo" required>
+	    		<option value="H" th:selected="${empleado.sexo == 'M'}">H</option>
+	   			 <option value="M" th:selected="${empleado.sexo == 'F'}">M</option>
+			</select>
+		
+        <label for="categoria">Categoría:</label>
+        <input type="number" id="categoria" name="categoria" th:value="${empleado.categoria}" min="1" max="10" required/>
+    
+        <label for="anyosTrabajados">Años Trabajados:</label>
+        <input type="number" id="anyosTrabajados" name="anyosTrabajados" th:value="${empleado.anyosTrabajados}" required/>
+    
+        <button type="submit">Guardar</button>
+    </form>
+    
+    <a href="/empresa">Volver a la lista</a>
+</body>
+</html>

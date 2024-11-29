@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+    <title>Lista de Empleados</title>
+</head>
+<body>
+  <div th:if="${mensaje}" class="alert alert-success">
+        <p th:text="${mensaje}"></p>
+    </div>
+    <div th:if="${error}" class="alert alert-danger">
+        <p th:text="${error}"></p>
+    </div>
+    <h1>Lista de Empleados</h1>
+    <form th:action="@{/empresa/buscar}" method="get">
+        <input type="text" name="dni" placeholder="Buscar por DNI" />
+        <button type="submit">Buscar</button>
+    </form>
+
+    <a href="/empresa/crear">Crear Nuevo Empleado</a>
+    <table>
+        <thead>
+            <tr>
+                <th>DNI</th>
+                <th>Nombre</th>
+                <th>Sexo</th>
+                <th>Categoría</th>
+                <th>Años Trabajados</th>
+                <th>Sueldo</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="empleado : ${empleados}">
+                <td th:text="${empleado.dni}"></td>
+                <td th:text="${empleado.nombre}"></td>
+                <td th:text="${empleado.sexo}"></td>
+                <td th:text="${empleado.categoria}"></td>
+                <td th:text="${empleado.anyosTrabajados}"></td>
+                <td th:text="${empleado.sueldo}"></td>
+                <td>
+                    <a th:href="@{/empresa/editar/{dni}(dni=${empleado.dni})}">Editar</a>
+                    <form th:action="@{/empresa/eliminar/{dni}(dni=${empleado.dni})}" method="post" style="display:inline;">
+                        <button type="submit">Eliminar</button>
+                    </form>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>
